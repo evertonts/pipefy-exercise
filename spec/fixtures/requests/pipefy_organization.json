@@ -1,0 +1,59 @@
+{
+  "data": {
+    "organizations": [
+      {
+        "id": "92858",
+        "name": "Pipefy Recruitment Test",
+        "pipes": [
+          {
+            "id": "335557",
+            "name": "Back-end Test",
+            "start_form_fields": [
+              {
+                "label": "What's the bug?",
+                "id": "what_s_the_bug"
+              }
+            ],
+            "phases": [
+              {
+                "id": "2343216",
+                "name": "Screening",
+                "fields": [
+                  {
+                    "label": "Where is the bug?",
+                    "id": "where_is_the_bug"
+                  }
+                ],
+                "cards": {
+                  "edges": [
+                    {
+                      "node": {
+                        "id": "4368600",
+                        "created_at": "2017-12-18T15:10:06-02:00",
+                        "title": "Missing translation on open card",
+                        "fields": [
+                          {
+                            "name": "What's the bug?",
+                            "value": "Missing translation on open card"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "2343221",
+                "name": "Archived",
+                "fields": [],
+                "cards": {
+                  "edges": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
