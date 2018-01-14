@@ -8,7 +8,7 @@ class OrganizationBuilder
     organizations_attr = to_nested_attributes(attributes)
 
     ActiveRecord::Base.transaction do
-      organizations_attr.each do |organization_attr|
+      organizations_attr.map do |organization_attr|
         Organization.create!(organization_attr)
       end
     end

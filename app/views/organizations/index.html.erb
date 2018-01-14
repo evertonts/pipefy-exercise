@@ -1,0 +1,67 @@
+<%= link_to 'Fetch new data',
+  organizations_url,
+  class: 'button button--right',
+  method: 'post'
+%>
+
+<% @organizations.each do |organization| %>
+  <h1><%= organization.name %></h1>
+
+  <% organization.pipes.each do |pipe| %>
+    <h2><%= pipe.name %></h2>
+
+    <% fields = pipe.all_fields %>
+    <% cards = pipe.all_cards %>
+
+    <table class="cards-table">
+      <tr>
+        <th>
+          Title
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Current Phase
+        </th>
+
+        <th>
+          Due Date
+        </th>
+
+        <% fields.each do |field| %>
+          <th>
+            <%= field['label'] %>
+          </th>
+        <% end %>
+      </tr>
+      <% cards.each do |card| %>
+        <tr>
+          <td>
+            <%= card.title %>
+          </td>
+
+          <td>
+            <%= card.created_at.strftime('%d/%m/%Y') %>
+          </td>
+
+          <td>
+            <%= card.phase.name %>
+          </td>
+
+          <td>
+            <%= card.due_date %>
+          </td>
+
+          <% fields.each do |field| %>
+            <td>
+              <%= a = card.fields.find { |f| f['name'] == field['label'] }; a&.fetch('value') %>
+            </td>
+          <% end %>
+        <tr>
+      <% end %>
+    </table>
+  <% end %>
+<% end %>
