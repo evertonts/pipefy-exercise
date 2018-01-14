@@ -2,8 +2,6 @@ class Pipe < ApplicationRecord
   belongs_to :organization
   has_many :phases, dependent: :destroy
 
-  accepts_nested_attributes_for :phases
-
   # Public: Returns all fields for all phases of the pipe
   #
   # Returns an Array

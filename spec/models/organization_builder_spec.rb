@@ -12,6 +12,23 @@ RSpec.describe OrganizationBuilder do
       and change(Phase, :count).by(2).
       and change(Card, :count).by(1)
     end
+
+    it 'updates the data when it has already been fetched' do
+      response = load_fixture_json('requests/pipefy_organization.json')
+
+      subject.create_from_response!(response)
+
+      response[:data][:organizations].first[:name] = 'test'
+
+      expect do
+        subject.create_from_response!(response)
+      end.to change(Organization, :count).by(0).
+      and change(Pipe, :count).by(0).
+      and change(Phase, :count).by(0).
+      and change(Card, :count).by(0)
+
+      expect(Organization.last.name).to eq 'test'
+    end
   end
 end
 

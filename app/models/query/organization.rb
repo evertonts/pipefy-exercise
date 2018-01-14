@@ -32,7 +32,7 @@ module Query
                   node {
                     id
                     created_at
-
+                    due_date
                     title
                     fields {
                       name

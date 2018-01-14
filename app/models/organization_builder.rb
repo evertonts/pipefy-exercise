@@ -3,49 +3,75 @@
 class OrganizationBuilder
   # Public: Creates organizations and the nested models from the Pipefy API response
   #
-  # Returns Nothing
+  # Returns an Array
   def create_from_response!(attributes)
-    organizations_attr = to_nested_attributes(attributes)
+    organizations = attributes[:data][:organizations].deep_dup
 
     ActiveRecord::Base.transaction do
-      organizations_attr.map do |organization_attr|
-        Organization.create!(organization_attr)
+      organizations.map do |organization_attr|
+        organization = create_organization(organization_attr)
+
+        organization_attr[:pipes].each do |pipe_attr|
+          pipe = create_pipe(organization, pipe_attr)
+
+          pipe_attr[:phases].each do |phase_attr|
+            phase = create_phase(pipe, phase_attr)
+
+            phase_attr[:cards][:edges].each do |card_attr|
+              create_card(phase, card_attr[:node])
+            end
+          end
+        end
+
+        organization
       end
     end
   end
 
   private
 
-  # Internal: Adapt the Pipefy response to be able to use Rails nested attributes
-  # to create the organization and its submodels. Also modify the id attribute to an
-  # external_id
-  #
-  # Returns a Hash
-  def to_nested_attributes(attributes)
-    attrs = attributes.dup
+  def create_organization(attributes)
+    organization = Organization.where(external_id: attributes[:id]).first_or_initialize
 
-    organizations = attrs[:data][:organizations]
+    organization.assign_attributes(name: attributes[:name])
+    organization.save!
 
-    organizations.each do |organization|
-      organization[:pipes].each do |pipe|
-        pipe[:phases].each do |phase|
-          phase[:cards] = phase[:cards][:edges].inject([]) do |buffer, edge|
-            edge[:node][:external_id] = edge[:node].delete(:id)
-            buffer << edge[:node]
-          end
+    organization
+  end
 
-          phase[:cards_attributes] = phase.delete(:cards)
-          phase[:external_id] = phase.delete(:id)
-        end
+  def create_pipe(organization, attributes)
+    pipe = organization.pipes.where(external_id: attributes[:id]).first_or_initialize
 
-        pipe[:phases_attributes] = pipe.delete(:phases)
-        pipe[:external_id] = pipe.delete(:id)
-      end
+    pipe.assign_attributes(
+      name: attributes[:name],
+      start_form_fields: attributes[:start_form_fields]
+    )
+    pipe.save!
 
-      organization[:pipes_attributes] = organization.delete(:pipes)
-      organization[:external_id] = organization.delete(:id)
-    end
+    pipe
+  end
 
-    organizations
+  def create_phase(pipe, attributes)
+    phase = pipe.phases.where(external_id: attributes[:id]).first_or_initialize
+
+    phase.assign_attributes(
+      name: attributes[:name],
+      fields: attributes[:fields]
+    )
+    phase.save!
+
+    phase
+  end
+
+  def create_card(phase, attributes)
+    card = phase.cards.where(external_id: attributes[:id]).first_or_initialize
+
+    card.assign_attributes(
+      title: attributes[:title],
+      fields: attributes[:fields],
+      due_date: attributes[:due_date]
+    )
+
+    card.save!
   end
 end
