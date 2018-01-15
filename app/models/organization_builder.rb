@@ -1,7 +1,10 @@
 # Class responsible for building an organization from the response of
 # the Pipefy API
 class OrganizationBuilder
-  # Public: Creates organizations and the nested models from the Pipefy API response
+  # Public: Creates or updates the organizations and the nested models from the
+  # Pipefy API response
+  # As the update depends on the `external_id` it is not straightforward to use the Rails nested attributes to build the models, what seems like the best
+  # way to do it, so the models are being built one by one
   #
   # Returns an Array
   def create_from_response!(attributes)
