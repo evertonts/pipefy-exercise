@@ -5,7 +5,7 @@ class Pipe < ApplicationRecord
   # Public: Returns all fields for all phases of the pipe
   #
   # Returns an Array
-  def all_fields
+  def fields
     phases_fields = phases.inject([]) do |buffer, phase|
       buffer + phase.fields
     end
@@ -16,7 +16,7 @@ class Pipe < ApplicationRecord
   # Public: Returns all cards in the pipe
   #
   # Returns an Array
-  def all_cards
+  def cards
     Card.where(phase: phases)
   end
 end

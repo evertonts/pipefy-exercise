@@ -26,8 +26,3 @@ RSpec.feature 'show organization cards data' do
     expect(page).to have_content('Missing translation on open card')
   end
 end
-
-def load_fixture_file(path)
-  full_path = Rails.root.join('spec/fixtures', path)
-  File.read(full_path)
-end

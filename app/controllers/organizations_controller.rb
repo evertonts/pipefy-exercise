@@ -4,12 +4,7 @@ class OrganizationsController < ApplicationController
   end
 
   def create
-    client = PipefyClient.new
-    query = { query: Query::Organization.new.query_string }
-
-    response = client.query(query)
-
-    @organizations = OrganizationBuilder.new.create_from_response!(response)
+    @organizations = Organization.create_or_update_from_pipefy_api
 
     render :index
   end

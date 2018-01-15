@@ -31,10 +31,3 @@ RSpec.describe OrganizationBuilder do
     end
   end
 end
-
-def load_fixture_json(path)
-  full_path = Rails.root.join('spec/fixtures', path)
-  file = File.read(full_path)
-
-  JSON.parse(file, symbolize_names: true)
-end

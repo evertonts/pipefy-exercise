@@ -1,0 +1,8 @@
+phase:
+  name: Phase test
+  external_id: 42
+  fields: [{
+    label: Phase Field,
+    id: phase_field
+  }]
+  pipe: pipe

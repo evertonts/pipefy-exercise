@@ -1,0 +1,17 @@
+card:
+  title: Test Card
+  external_id: 42
+  fields: [{
+    name: 'Phase Field',
+    value: "Form"
+  }, {
+    name: 'Pipe Field',
+    value: "Attachment"
+  }]
+  phase: phase
+
+empty_card:
+  title: Empty
+  external_id: 1
+  fields: []
+  phase: phase

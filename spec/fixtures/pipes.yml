@@ -1,0 +1,9 @@
+pipe:
+  name: Pipe Test
+  external_id: 42
+  start_form_fields: [{
+    label: Pipe Field,
+    id: pipe_field
+  }]
+  organization: organization
+
