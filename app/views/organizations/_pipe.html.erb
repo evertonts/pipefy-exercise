@@ -1,0 +1,54 @@
+<h2><%= pipe.name %></h2>
+<br/>
+
+<table class="cards-table">
+  <tr>
+    <th>
+      Title
+    </th>
+
+    <th>
+      Created at
+    </th>
+
+    <th>
+      Current Phase
+    </th>
+
+    <th>
+      Due Date
+    </th>
+
+    <% fields.each do |field| %>
+      <th>
+        <%= field['label'] %>
+      </th>
+    <% end %>
+  </tr>
+
+  <% cards.each do |card| %>
+    <tr>
+      <td>
+        <%= card.title %>
+      </td>
+
+      <td>
+        <%= format_date(card.created_at) %>
+      </td>
+
+      <td>
+        <%= card.phase.name %>
+      </td>
+
+      <td>
+        <%= format_date(card.due_date) %>
+      </td>
+
+      <% fields.each do |field| %>
+        <td>
+          <%= a = card.fields.find { |f| f['name'] == field['label'] }; a&.fetch('value') %>
+        </td>
+      <% end %>
+    <tr>
+  <% end %>
+</table>
