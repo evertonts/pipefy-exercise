@@ -3,6 +3,10 @@
 # organization.
 module Query
   class Organization
+    def query_hash
+      { query: query_string }
+    end
+
     # Public: Returns the graphQL query string that is going to be used on
     # the Pipefy API
     #

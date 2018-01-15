@@ -7,7 +7,7 @@ class Organization < ApplicationRecord
   # Returns an Array
   def self.create_or_update_from_pipefy_api
     client = PipefyClient.new
-    query = { query: ::Query::Organization.new.query_string }
+    query = ::Query::Organization.new.query_hash
 
     response = client.query(query)
 
