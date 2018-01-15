@@ -6,9 +6,11 @@
 
 <% @organizations.each do |organization| %>
   <h1><%= organization.name %></h1>
+  <br/>
 
   <% organization.pipes.each do |pipe| %>
     <h2><%= pipe.name %></h2>
+    <br/>
 
     <% fields = pipe.all_fields %>
     <% cards = pipe.all_cards %>
@@ -44,7 +46,7 @@
           </td>
 
           <td>
-            <%= card.created_at.strftime('%d/%m/%Y') %>
+            <%= format_date(card.created_at) %>
           </td>
 
           <td>
